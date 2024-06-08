@@ -1,3 +1,4 @@
+import { StepProps } from "@/app/page";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,16 +11,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Car } from "lucide-react";
-import { Dispatch, SetStateAction } from "react";
 
-interface Props {
-  setStep: Dispatch<SetStateAction<number>>;
-  setVideoURL: Dispatch<SetStateAction<string>>;
-  setPrompt: Dispatch<SetStateAction<string>>;
-}
-
-export default function StepOne({ setStep, setVideoURL, setPrompt }: Props) {
+export default function StepOne({
+  setStep,
+  setVideoURL,
+  setPrompt,
+}: StepProps) {
   return (
     <Card className="max-w-[800px] mx-auto space-y-4">
       <CardHeader className="slace-y-4">
@@ -39,15 +36,6 @@ export default function StepOne({ setStep, setVideoURL, setPrompt }: Props) {
             }}
           />
         </div>
-        <div>
-          <Label>Promp</Label>
-          <Textarea
-            placeholder="Create a highlight reel of Roger Federer discussing his retirement"
-            onChange={(e) => {
-              setPrompt(e.target.value);
-            }}
-          />
-        </div>
       </CardContent>
       <CardFooter>
         <Button
@@ -55,7 +43,7 @@ export default function StepOne({ setStep, setVideoURL, setPrompt }: Props) {
             setStep((step) => step + 1);
           }}
         >
-          Generate
+          Continue
         </Button>
       </CardFooter>
     </Card>

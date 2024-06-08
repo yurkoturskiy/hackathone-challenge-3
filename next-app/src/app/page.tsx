@@ -1,7 +1,16 @@
 "use client";
 
 import StepOne from "@/components/StepOne";
-import { useState } from "react";
+import StepTwo from "@/components/StepTwo";
+import { Dispatch, SetStateAction, useState } from "react";
+
+export interface StepProps {
+  setStep: Dispatch<SetStateAction<number>>;
+  videoURL: string;
+  setVideoURL: Dispatch<SetStateAction<string>>;
+  setPrompt: Dispatch<SetStateAction<string>>;
+}
+const steps = [StepOne, StepTwo];
 
 export default function Home() {
   const [step, setStep] = useState(1);
@@ -11,15 +20,16 @@ export default function Home() {
   const [highlight, setHighlight] = useState("");
   const [feedback, setFeedback] = useState("");
 
+  const View = steps[step - 1];
+
   return (
     <div>
-      {step === 1 && (
-        <StepOne
-          setStep={setStep}
-          setPrompt={setPrompt}
-          setVideoURL={setVideoURL}
-        />
-      )}
+      <View
+        setStep={setStep}
+        setPrompt={setPrompt}
+        videoURL={videoURL}
+        setVideoURL={setVideoURL}
+      />
     </div>
   );
 }
