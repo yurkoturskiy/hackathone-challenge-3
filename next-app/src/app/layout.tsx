@@ -17,8 +17,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <header className="h-16 flex items-center px-10">The App</header>
-        <main className="container mx-auto pt-16">{children}</main>
+        <header className="h-32 flex justify-center font-bold text-slate-400 items-center px-10">
+          SportRecap
+        </header>
+        <main className="container mx-auto pt-0">{children}</main>
       </body>
     </html>
   );
