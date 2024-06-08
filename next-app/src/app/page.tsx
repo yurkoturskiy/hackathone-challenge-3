@@ -1,7 +1,11 @@
 "use client";
 
+
 import StepOne from "@/components/StepOne";
+import { MyComposition } from "@/remotion/Composition";
+import { Player } from "@remotion/player";
 import { useState } from "react";
+import { DURATION_IN_FRAMES, VIDEO_FPS, VIDEO_HEIGHT, VIDEO_WIDTH } from "../../types/constants";
 
 export default function Home() {
   const [step, setStep] = useState(1);
@@ -11,15 +15,17 @@ export default function Home() {
   const [highlight, setHighlight] = useState("");
   const [feedback, setFeedback] = useState("");
 
-  return (
-    <div>
-      {step === 1 && (
-        <StepOne
-          setStep={setStep}
-          setPrompt={setPrompt}
-          setVideoURL={setVideoURL}
-        />
-      )}
-    </div>
+  return (<div>
+
+
+
+    {step === 1 && (
+      <StepOne
+        setStep={setStep}
+        setPrompt={setPrompt}
+        setVideoURL={setVideoURL}
+      />
+    )}
+  </div>
   );
 }
