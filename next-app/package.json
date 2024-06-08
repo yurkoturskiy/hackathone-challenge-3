@@ -9,6 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@remotion/cli": "^4.0.171",
+    "@remotion/lambda": "^4.0.171",
+    "@remotion/player": "^4.0.171",
+    "@remotion/renderer": "^4.0.171",
+    "remotion": "^4.0.171",
     "@hookform/resolvers": "^3.6.0",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-slot": "^1.0.2",

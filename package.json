@@ -1,9 +1,0 @@
-{
-  "dependencies": {
-    "@remotion/cli": "^4.0.171",
-    "@remotion/lambda": "^4.0.171",
-    "@remotion/player": "^4.0.171",
-    "@remotion/renderer": "^4.0.171",
-    "remotion": "^4.0.171"
-  }
-}
