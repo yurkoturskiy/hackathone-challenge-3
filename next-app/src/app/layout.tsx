@@ -17,8 +17,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <header className="h-20 flex font-bold text-slate-400 items-center px-10">
-          SportRecap
+        <header className="h-20 bg-white flex font-bold shadow-sm items-center">
+          <div className="container px-16 text-slate-500">SportRecap</div>
         </header>
         <main className="container mx-auto pt-0">{children}</main>
       </body>

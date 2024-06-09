@@ -25,7 +25,7 @@ export default function IndexPage({ params }: Props) {
 
   return (
     <div>
-      <h1>Index Page</h1>
+      <h1>Project Page</h1>
       <div>{JSON.stringify(data)}</div>
     </div>
   );
