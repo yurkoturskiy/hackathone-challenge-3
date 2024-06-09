@@ -5,8 +5,8 @@ const RadialGradient: React.FC<{
   radius: number;
   color: string;
 }> = ({ radius, color }) => {
-  const height = radius * 2;
-  const width = radius * 2;
+  const height = radius * 3;
+  const width = radius * 3;
 
   return (
     <AbsoluteFill

@@ -16,6 +16,7 @@ import { z } from "zod";
 import { RenderControls } from "../components/RenderControls";
 import { Tips } from "../components/Tips/Tips";
 import { Spacing } from "../components/Spacing";
+import { useSearchParams } from "next/navigation";
 
 const container: React.CSSProperties = {
   maxWidth: 768,
@@ -37,6 +38,13 @@ const player: React.CSSProperties = {
 
 const Home: NextPage = () => {
   const [text, setText] = useState<string>(defaultMyCompProps.title);
+  const searchParams = useSearchParams();
+  const videoUrl = searchParams.get("videoUrl");
+  const start = searchParams.get("start") as string;
+  const end = searchParams.get("end") as string;
+  const title = searchParams.get("title");
+  const duration =
+    60 + 30 + 120 + (parseInt(end) - parseInt(start)) * VIDEO_FPS;
 
   const inputProps: z.infer<typeof CompositionProps> = useMemo(() => {
     return {
@@ -51,7 +59,8 @@ const Home: NextPage = () => {
           <Player
             component={Main}
             inputProps={inputProps}
-            durationInFrames={DURATION_IN_FRAMES}
+            // durationInFrames={DURATION_IN_FRAMES}
+            durationInFrames={duration}
             fps={VIDEO_FPS}
             compositionHeight={VIDEO_HEIGHT}
             compositionWidth={VIDEO_WIDTH}
