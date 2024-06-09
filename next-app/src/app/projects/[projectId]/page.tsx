@@ -4,12 +4,12 @@ import useSWR from "swr";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 interface Props {
-  params: { indexName: string };
+  params: { projectId: string };
 }
 
 export default function IndexPage({ params }: Props) {
   const supabase = createClientComponentClient();
-  const indexName = params.indexName;
+  const projectId = params.projectId;
   const { data, error, isLoading } = useSWR("projects", async () => {
     const { data, error } = await supabase.from("projects").select("*");
     return data;
