@@ -3,18 +3,17 @@
 import YouTubeEmbed from "@/components/YouTubeEmbeded";
 import {
   Card,
-  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
-import { VideoIcon, MagicWandIcon } from "@radix-ui/react-icons";
+import { MagicWandIcon } from "@radix-ui/react-icons";
 
 import { motion } from "framer-motion";
-import { Input } from "@/components/ui/input";
+import useSWR from "swr";
 
 interface Video {
   id: string;
@@ -25,21 +24,12 @@ interface Video {
 }
 
 function IndexesPage() {
-  const [videos, setVideos] = useState<Video[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    fetch("/metadata.json")
-      .then((response) => response.json())
-      .then((data) => {
-        setVideos(data.videos);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching video metadata:", error);
-      });
-  }, []);
+  const { data, error, isLoading } = useSWR("/metadata.json", async (url) => {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  });
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -47,12 +37,21 @@ function IndexesPage() {
 
   return (
     <div>
+      <div className="px-6 pt-10">
+        <h1 className="font-bold text-4xl text-slate-700 mb-6">
+          Generate highlight reels
+        </h1>
+        <p className="max-w-[660px] text-slate-700">
+          Help fans and media quickly grasp the key takeaways and most memorable
+          moments without watching the entire press conference.
+        </p>
+      </div>
       <Dialog.Root open={open} onOpenChange={setOpen}>
         <Dialog.Trigger asChild>
           <motion.div
             animate={{ backgroundColor: "#ffffff" }}
             layoutId="create-project"
-            className="flex z-20 px-8 my-20 shadow shadow-blue-100 hover:shadow-lg transition-shadow cursor-pointer hover:shadow-blue-200 items-center rounded-full h-20 w-full"
+            className="flex z-20 px-8 mb-20 select-none mt-10 shadow shadow-blue-100 hover:shadow-lg transition-shadow cursor-pointer hover:shadow-blue-200 items-center rounded-full h-20 w-full"
           >
             {open === false && (
               <div className="text-blue-500 flex items-center gap-5 font-[370]">
@@ -88,11 +87,11 @@ function IndexesPage() {
         </Dialog.Portal>
       </Dialog.Root>
 
-      {/* <h1 className="text-md font-semibold text-slate-500 tracking-tight mb-4">
-        History
-      </h1> */}
-      <div className="grid grid-cols-4 gap-4">
-        {videos.map((video) => (
+      <h3 className="text-sm px-6 font-medium text-slate-500 tracking-tight mb-2">
+        Previous projects
+      </h3>
+      <div className="grid grid-cols-3 px-4 gap-4">
+        {data.videos.map((video) => (
           <Card key={video.id} className="overflow-hidden" asChild>
             <Link href={`/projects/${video.id}`}>
               <div className="pointer-events-none">

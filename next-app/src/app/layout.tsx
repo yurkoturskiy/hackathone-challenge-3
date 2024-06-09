@@ -18,9 +18,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <header className="h-20 bg-white flex font-bold shadow-sm items-center">
-          <div className="container px-16 text-slate-500">SportRecap</div>
+          <div className="container text-slate-500">
+            <span className="px-6">SportRecap</span>
+          </div>
         </header>
-        <main className="container mx-auto pt-0">{children}</main>
+        <main className="container mx-auto">{children}</main>
       </body>
     </html>
   );
