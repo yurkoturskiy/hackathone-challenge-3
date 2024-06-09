@@ -28,3 +28,25 @@ export async function POST(req: NextRequest) {
   );
   return NextResponse.json({ index });
 }
+
+export async function GET(req: NextRequest) {
+  const { searchParams, hostname } = new URL(req.url);
+  const name = searchParams.get("indexName");
+  const client = new TwelveLabs({
+    apiKey: process.env.TWELVELABS_API as string,
+  });
+  const indexes = await client.index.list();
+  const indexesWithVideos = indexes.filter((index) => index.videoCount);
+  const index = indexesWithVideos.find((index) => index.name === name);
+  const videos = await index?.listVideos();
+
+  if (!index) {
+    return NextResponse.json({ error: "Index not found" }, { status: 404 });
+  }
+
+  return NextResponse.json({
+    id: index.id,
+    name: index.name,
+    video: { id: videos?.[0].id, metadata: { ...videos?.[0].metadata } },
+  });
+}
