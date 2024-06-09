@@ -44,7 +44,7 @@ const Home: NextPage = () => {
   const end = searchParams.get("end") as string;
   const title = searchParams.get("title");
   const duration =
-    60 + 30 + 120 + (parseInt(end) - parseInt(start)) * VIDEO_FPS;
+    60 + 30 + 30 + 120 + (parseInt(end) - parseInt(start)) * VIDEO_FPS;
 
   const inputProps: z.infer<typeof CompositionProps> = useMemo(() => {
     return {
@@ -66,7 +66,6 @@ const Home: NextPage = () => {
             compositionWidth={VIDEO_WIDTH}
             style={player}
             controls
-            autoPlay
             loop
           />
         </div>

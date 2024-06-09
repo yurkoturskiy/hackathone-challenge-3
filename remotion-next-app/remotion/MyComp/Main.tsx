@@ -36,7 +36,7 @@ export const Main = ({ title }: z.infer<typeof CompositionProps>) => {
   const { fps } = useVideoConfig();
 
   const transitionStart = 2 * fps;
-  const transitionDuration = 1 * fps;
+  const transitionDuration = 2 * fps;
 
   const logoOut = spring({
     fps,
@@ -49,7 +49,7 @@ export const Main = ({ title }: z.infer<typeof CompositionProps>) => {
   });
 
   const titleStyle: React.CSSProperties = useMemo(() => {
-    return { fontFamily, fontSize: 70 };
+    return { fontFamily, fontSize: 70, paddingLeft: 120, paddingRight: 120 };
   }, []);
 
   const clipDurationInFrames = (parseInt(end) - parseInt(start)) * fps;
@@ -61,19 +61,8 @@ export const Main = ({ title }: z.infer<typeof CompositionProps>) => {
         <Rings outProgress={logoOut}></Rings>
         <AbsoluteFill style={logo}>
           <TextFade>
-            <div
-              style={{
-                fontSize: 36,
-                color: "grey",
-                fontFamily,
-                lineHeight: "36px",
-              }}
-            >
-              Name
-            </div>
             <h1 style={titleStyle}>{text}</h1>
           </TextFade>
-          {/* <NextLogo outProgress={logoOut}></NextLogo> */}
         </AbsoluteFill>
       </Sequence>
       <Sequence

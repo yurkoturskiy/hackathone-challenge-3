@@ -14,6 +14,7 @@ import { MagicWandIcon } from "@radix-ui/react-icons";
 
 import { motion } from "framer-motion";
 import useSWR from "swr";
+import { useRouter } from "next/navigation";
 
 interface Video {
   id: string;
@@ -30,9 +31,12 @@ function IndexesPage() {
     const data = await response.json();
     return data;
   });
+  const router = useRouter();
+
+  const [inputUrl, setInputUrl] = useState("");
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div></div>;
   }
 
   return (
@@ -71,17 +75,27 @@ function IndexesPage() {
           </Dialog.Overlay>
           <Dialog.Content asChild>
             <div className="fixed top-1/4 inset-x-0 container">
-              <motion.div
+              <motion.form
                 layoutId="create-project"
                 initial={{ backgroundColor: "#ffffff" }}
                 animate={{ backgroundColor: "#10172A" }}
                 className="w-full outline  ring-1 ring-blue-900 bg-slate-900 rounded-full outline-none h-20 "
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  const urlParams = new URLSearchParams(
+                    new URL(inputUrl).search
+                  );
+                  const videoId = urlParams.get("v");
+                  router.push(`/projects/${videoId}`);
+                }}
               >
                 <motion.input
+                  onInput={(e) => setInputUrl(e.currentTarget.value)}
                   placeholder="Paste YouTube URL"
                   className="w-full px-8 text-slate-200 placeholder:text-slate-700 caret-blue-700 outline-none bg-transparent h-full"
                 />
-              </motion.div>
+              </motion.form>
             </div>
           </Dialog.Content>
         </Dialog.Portal>

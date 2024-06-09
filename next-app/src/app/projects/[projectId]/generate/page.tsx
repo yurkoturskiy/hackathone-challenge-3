@@ -1,11 +1,12 @@
 "use client";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface Props {
   params: { projectId: string };
 }
 export default function GeneratePage({ params }: Props) {
+  const router = useRouter();
   const projectId = params.projectId;
   const searchParams = useSearchParams();
   const prompt = searchParams.get("prompt");
@@ -23,7 +24,7 @@ export default function GeneratePage({ params }: Props) {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ prompt, videoId }),
+            body: JSON.stringify({ prompt, videoId, projectId }),
           });
 
           if (!response.ok) {
@@ -34,6 +35,13 @@ export default function GeneratePage({ params }: Props) {
           console.log("Highlight generated:", data);
           setGeneratingHighlight(false);
           setHighlight(data);
+          const title = data.title;
+          const start = data.start;
+          const end = data.end;
+          const videoUrl = data.videoUrl;
+          router.push(
+            `${process.env.NEXT_PUBLIC_REMOTION_URL}/?title=${title}&start=${start}&end=${end}&videoUrl=${videoUrl}`
+          );
         } catch (error) {
           console.error("Error generating highlight:", error);
         }

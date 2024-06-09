@@ -10,3 +10,16 @@ export async function POST(req: NextRequest) {
   console.log(`Task id=${task.id}`);
   return NextResponse.json({ task });
 }
+
+export async function GET(req: NextRequest) {
+  const { searchParams, hostname } = new URL(request.url);
+  const tokenSearchParameterValue = searchParams.get("token");
+
+  const { indexId } = req.query;
+  const client = new TwelveLabs({
+    apiKey: process.env.TWELVELABS_API as string,
+  });
+  const task = await client.task.get(indexId as string);
+  console.log(`Task id=${task.id}`);
+  return NextResponse.json({ task });
+}

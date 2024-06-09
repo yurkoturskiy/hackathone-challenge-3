@@ -18,15 +18,19 @@ import { MagicWandIcon } from "@radix-ui/react-icons";
 import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
 import Link from "next/link";
+import Spinner from "@/components/ui/spinner";
+import { useRouter } from "next/navigation";
 
 interface Props {
   params: { projectId: string };
 }
 
 export default function IndexPage({ params }: Props) {
+  const router = useRouter();
   const [isGeneratingIdeas, setIsGeneratingIdeas] = useState(false);
   const [mainCharacter, setMainCharacter] = useState<string | null>(null);
   const [promptIdeas, setPromptIdeas] = useState<string[] | null>(null);
+  const [customPrompt, setCustomPrompt] = useState<string | null>(null);
 
   const supabase = createClientComponentClient();
   const projectId = params.projectId;
@@ -51,7 +55,7 @@ export default function IndexPage({ params }: Props) {
   });
 
   if (isLoading || storageIsLoading) {
-    return <div>Loading...</div>;
+    return <div></div>;
   }
 
   if (error) {
@@ -110,13 +114,27 @@ export default function IndexPage({ params }: Props) {
               placeholder="Create a highlight reel of Roger Federer discussing his retirement"
               className="resize-none"
               rows={1}
+              onInput={(e) => {
+                setCustomPrompt(e.currentTarget.value);
+              }}
             />
-            <Button variant="secondary">Generate</Button>
+            <Button
+              onClick={() => {
+                const url = `/projects/${projectId}/generate?prompt=${customPrompt}&videoId=${data.video.id}`;
+                router.push(url);
+              }}
+              variant="secondary"
+            >
+              Generate
+            </Button>
           </div>
         </CardContent>
       </Card>
       {((mainCharacter && promptIdeas) || isGeneratingIdeas) && (
-        <Separator className="my-6" />
+        <div className="flex flex-col items-center">
+          <Separator className="my-6" />
+          {isGeneratingIdeas && <Spinner />}
+        </div>
       )}
       {mainCharacter && promptIdeas && (
         <h3 className="text-xl font-bold mb-6 text-slate-800">
