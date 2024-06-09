@@ -10,7 +10,7 @@ function convertToEmbedLink(youtubeUrl: string): string {
 }
 
 const YouTubeEmbed = ({ url }: { url: string }) => (
-  <div className="relative overflow-hidden mt-4 pb-[56.25%] h-0">
+  <div className="relative overflow-hidden pb-[56.25%] h-0">
     <iframe
       className="absolute top-0 left-0 w-full h-full"
       width="560"
