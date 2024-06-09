@@ -61,16 +61,11 @@ const Home: NextPage = () => {
             loop
           />
         </div>
-        <RenderControls
+        {/* <RenderControls
           text={text}
           setText={setText}
           inputProps={inputProps}
-        ></RenderControls>
-        <Spacing></Spacing>
-        <Spacing></Spacing>
-        <Spacing></Spacing>
-        <Spacing></Spacing>
-        <Tips></Tips>
+        ></RenderControls> */}
       </div>
     </div>
   );
