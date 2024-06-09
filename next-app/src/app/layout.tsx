@@ -23,6 +23,9 @@ export default function RootLayout({
           </div>
         </header>
         <main className="container mx-auto">{children}</main>
+        <footer className="h-20 border-t mt-20 border-t-slate-200 flex items-center">
+          <div className="container text-slate-500">SportRecap – 2024</div>
+        </footer>
       </body>
     </html>
   );
