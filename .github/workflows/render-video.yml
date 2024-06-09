@@ -19,6 +19,7 @@ jobs:
       - uses: actions/setup-node@main
       - run: sudo apt update
       - run: sudo apt install ffmpeg
+      - run: cd ./next-app
       - run: npm i
       - run: echo $WORKFLOW_INPUT > input-props.json
         env:
