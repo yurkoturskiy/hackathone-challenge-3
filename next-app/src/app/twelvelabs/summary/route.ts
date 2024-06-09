@@ -46,6 +46,4 @@ export async function POST(req: NextRequest) {
   }
 
   return NextResponse.json({ error: "Assistant not found" }, { status: 404 });
-  console.log({ json });
-  return NextResponse.json(json);
 }
