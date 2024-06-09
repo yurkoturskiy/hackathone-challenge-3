@@ -1,7 +1,6 @@
 "use client";
 
 import YouTubeEmbed from "@/components/YouTubeEmbeded";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -22,17 +21,23 @@ interface Video {
 
 function IndexesPage() {
   const [videos, setVideos] = useState<Video[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetch("/metadata.json")
       .then((response) => response.json())
       .then((data) => {
         setVideos(data.videos);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching video metadata:", error);
       });
   }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
