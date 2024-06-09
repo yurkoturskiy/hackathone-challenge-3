@@ -17,6 +17,7 @@ import {
 import { MagicWandIcon } from "@radix-ui/react-icons";
 import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
+import Link from "next/link";
 
 interface Props {
   params: { projectId: string };
@@ -114,7 +115,9 @@ export default function IndexPage({ params }: Props) {
           </div>
         </CardContent>
       </Card>
-      {mainCharacter && promptIdeas && <Separator className="my-6" />}
+      {((mainCharacter && promptIdeas) || isGeneratingIdeas) && (
+        <Separator className="my-6" />
+      )}
       {mainCharacter && promptIdeas && (
         <h3 className="text-xl font-bold mb-6 text-slate-800">
           {mainCharacter} highlight prompt ideas
@@ -131,8 +134,14 @@ export default function IndexPage({ params }: Props) {
               <Button
                 variant="outline"
                 className="ml-auto group-hover:opacity-100 opacity-100"
+                asChild
               >
-                Generate
+                <Link
+                  href={`/projects/${projectId}/generate?prompt=${idea}&videoId=${data.video.id}`}
+                  target="_blank"
+                >
+                  Generate
+                </Link>
               </Button>
             </div>
           ))}
