@@ -16,12 +16,17 @@ import {
 } from "@/components/ui/card";
 import { MagicWandIcon } from "@radix-ui/react-icons";
 import { Separator } from "@/components/ui/separator";
+import { useState } from "react";
 
 interface Props {
   params: { projectId: string };
 }
 
 export default function IndexPage({ params }: Props) {
+  const [isGeneratingIdeas, setIsGeneratingIdeas] = useState(false);
+  const [mainCharacter, setMainCharacter] = useState<string | null>(null);
+  const [promptIdeas, setPromptIdeas] = useState<string[] | null>(null);
+
   const supabase = createClientComponentClient();
   const projectId = params.projectId;
   const { data, isLoading } = useSWR(
@@ -61,11 +66,31 @@ export default function IndexPage({ params }: Props) {
       <h1 className="text-xl mb-6 line-clamp-1 tracking-tight font-bold text-slate-800">
         {data?.video.metadata.filename}
       </h1>
-      {/* <div>Video: {JSON.stringify(data)}</div> */}
-      {/* <div>Storage: {JSON.stringify(storage)}</div> */}
-      <Button variant="outline" className="gap-2 mt-6 w-full px-8" size="lg">
+      <Button
+        disabled={isGeneratingIdeas}
+        variant="outline"
+        onClick={async () => {
+          const videoId = data.video.id as string;
+          console.log({ videoId });
+          setIsGeneratingIdeas(true);
+          const response = await fetch(`/twelvelabs/summary`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ videoId: videoId }),
+          });
+          const output = await response.json();
+          console.log({ output });
+          setMainCharacter(output.main_character);
+          setPromptIdeas(output.prompts);
+          setIsGeneratingIdeas(false);
+        }}
+        className="gap-2 mt-6 w-full px-8"
+        size="lg"
+      >
         <MagicWandIcon className="w-4 h-4" />
-        Generate highlight ideas
+        {isGeneratingIdeas ? "Generating ideas..." : "Generate highlight ideas"}
       </Button>
       <Separator className="my-6 flex items-center justify-center relative">
         <div className="bg-slate-100 px-4 text-slate-400">or</div>
@@ -89,6 +114,29 @@ export default function IndexPage({ params }: Props) {
           </div>
         </CardContent>
       </Card>
+      {mainCharacter && promptIdeas && <Separator className="my-6" />}
+      {mainCharacter && promptIdeas && (
+        <h3 className="text-xl font-bold mb-6 text-slate-800">
+          {mainCharacter} highlight prompt ideas
+        </h3>
+      )}
+      <div className="">
+        {promptIdeas &&
+          promptIdeas.map((idea, index) => (
+            <div
+              key={index}
+              className="group flex border-b border-b-slate-200 py-4 last:border-b-0 items-center"
+            >
+              <div>{idea}</div>
+              <Button
+                variant="outline"
+                className="ml-auto group-hover:opacity-100 opacity-100"
+              >
+                Generate
+              </Button>
+            </div>
+          ))}
+      </div>
     </div>
   );
 }
