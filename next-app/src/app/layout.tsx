@@ -22,7 +22,14 @@ export default function RootLayout({
             <span className="px-6">SportRecap</span>
           </div>
         </header>
-        <main className="container mx-auto">{children}</main>
+        <main
+          className="container mx-auto"
+          style={{
+            minHeight: "calc(100vh - 80px - 80px - 80px)",
+          }}
+        >
+          {children}
+        </main>
         <footer className="h-20 border-t mt-20 border-t-slate-200 flex items-center">
           <div className="container text-slate-500">SportRecap – 2024</div>
         </footer>
