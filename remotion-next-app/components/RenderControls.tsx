@@ -9,12 +9,19 @@ import { ErrorComp } from "./Error";
 import { Input } from "./Input";
 import { ProgressBar } from "./ProgressBar";
 import { Spacing } from "./Spacing";
+import { useSearchParams } from "next/navigation";
 
 export const RenderControls: React.FC<{
   text: string;
   setText: React.Dispatch<React.SetStateAction<string>>;
   inputProps: z.infer<typeof CompositionProps>;
 }> = ({ text, setText, inputProps }) => {
+  const searchParams = useSearchParams();
+  const videoUrl = searchParams.get("videoUrl");
+  const start = searchParams.get("start");
+  const end = searchParams.get("end");
+  const title = searchParams.get("title");
+
   const { renderMedia, state, undo } = useRendering(COMP_NAME, inputProps);
 
   return (
