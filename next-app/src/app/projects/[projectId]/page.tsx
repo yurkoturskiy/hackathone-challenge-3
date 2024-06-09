@@ -14,6 +14,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { MagicWandIcon } from "@radix-ui/react-icons";
+import { Separator } from "@/components/ui/separator";
 
 interface Props {
   params: { projectId: string };
@@ -56,14 +58,21 @@ export default function IndexPage({ params }: Props) {
         url={`https://www.youtube.com/watch?v=${projectId}`}
         className="h-[480px] mb-2 mt-0"
       />
-      <h1 className="text-xl mb-8 line-clamp-1 tracking-tight font-bold text-slate-800">
+      <h1 className="text-xl mb-6 line-clamp-1 tracking-tight font-bold text-slate-800">
         {data?.video.metadata.filename}
       </h1>
       {/* <div>Video: {JSON.stringify(data)}</div> */}
       {/* <div>Storage: {JSON.stringify(storage)}</div> */}
+      <Button variant="outline" className="gap-2 mt-6 w-full px-8" size="lg">
+        <MagicWandIcon className="w-4 h-4" />
+        Generate highlight ideas
+      </Button>
+      <Separator className="my-6 flex items-center justify-center relative">
+        <div className="bg-slate-100 px-4 text-slate-400">or</div>
+      </Separator>
       <Card className="px-1 pb-2">
         <CardHeader>
-          <CardTitle className="text-lg">Generate video highlight</CardTitle>
+          <CardTitle className="text-lg">Describe video highlight</CardTitle>
           <CardDescription>
             Describe the desired summary or highlight
           </CardDescription>
@@ -76,7 +85,7 @@ export default function IndexPage({ params }: Props) {
               className="resize-none"
               rows={1}
             />
-            <Button>Generate</Button>
+            <Button variant="secondary">Generate</Button>
           </div>
         </CardContent>
       </Card>

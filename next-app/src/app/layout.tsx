@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-slate-100`}>
         <header className="h-20 bg-white flex font-bold shadow-sm items-center">
           <div className="container text-slate-500">
             <span className="px-6">SportRecap</span>
