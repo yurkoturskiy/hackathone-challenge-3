@@ -1,3 +1,5 @@
+import { cn } from "@/lib/utils";
+
 function convertToEmbedLink(youtubeUrl: string): string {
   const url = new URL(youtubeUrl);
   const videoId = url.searchParams.get("v");
@@ -9,9 +11,15 @@ function convertToEmbedLink(youtubeUrl: string): string {
   return `https://www.youtube.com/embed/${videoId}`;
 }
 
-const YouTubeEmbed = ({ url }: { url: string }) => (
+const YouTubeEmbed = ({
+  url,
+  className,
+}: {
+  url: string;
+  className?: string;
+}) => (
   <iframe
-    className="w-full h-full"
+    className={cn("w-full h-full", className)}
     width="560"
     height="340"
     src={convertToEmbedLink(url)}
